@@ -22,7 +22,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "apollo/type-defs.js", "apollo/schema.js", "apollo/revolvers.js", "apollo/client.js"  ],
+, "apollo/type-defs.js", "apollo/schema.js", "apollo/revolvers.js", "apollo/client/client.js"  ],
   "exclude": [
     "node_modules"
   ]

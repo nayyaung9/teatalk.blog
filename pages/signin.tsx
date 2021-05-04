@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import {
   Button,
   Checkbox,
@@ -8,10 +9,35 @@ import {
   Input,
   Link,
   Stack,
-  Image,
-} from '@chakra-ui/react';
+  Image
+} from '@chakra-ui/react'
+import { SIGN_IN } from '../apollo/client/mutations'
+import { useMutation } from '@apollo/client'
+
+interface UserData {
+  email: string
+  password: string
+}
 
 export default function SignIn() {
+  const [signIn] = useMutation(SIGN_IN)
+
+  const [state, setState] = useState<UserData | null>({
+    email: '',
+    password: ''
+  })
+
+  const onFormSubmit = async e => {
+    e.preventDefault()
+
+    const { email, password } = state
+    const payload = {
+      email,
+      password
+    }
+    await signIn({ variables: payload })
+  }
+
   return (
     <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
       <Flex p={8} flex={1} align={'center'} justify={'center'}>
@@ -19,21 +45,34 @@ export default function SignIn() {
           <Heading fontSize={'2xl'}>Sign in to your account</Heading>
           <FormControl id="email">
             <FormLabel>Email address</FormLabel>
-            <Input type="email" />
+            <Input
+              type="email"
+              value={state.email}
+              onChange={e => setState({ ...state, email: e.target.value })}
+            />
           </FormControl>
           <FormControl id="password">
             <FormLabel>Password</FormLabel>
-            <Input type="password" />
+            <Input
+              type="password"
+              value={state.password}
+              onChange={e => setState({ ...state, password: e.target.value })}
+            />
           </FormControl>
           <Stack spacing={6}>
             <Stack
               direction={{ base: 'column', sm: 'row' }}
               align={'start'}
-              justify={'space-between'}>
+              justify={'space-between'}
+            >
               <Checkbox>Remember me</Checkbox>
               <Link color={'blue.500'}>Forgot password?</Link>
             </Stack>
-            <Button colorScheme={'blue'} variant={'solid'}>
+            <Button
+              colorScheme={'blue'}
+              variant={'solid'}
+              onClick={onFormSubmit}
+            >
               Sign in
             </Button>
           </Stack>
@@ -49,5 +88,5 @@ export default function SignIn() {
         />
       </Flex>
     </Stack>
-  );
+  )
 }
