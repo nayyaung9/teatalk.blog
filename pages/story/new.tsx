@@ -1,28 +1,53 @@
 import React, { useState } from 'react'
 import Layout from '../../components/layout/Layout'
 import dynamic from 'next/dynamic'
-import { Container, Input } from '@chakra-ui/react'
+import { Container, Input, Button } from '@chakra-ui/react'
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
+import { CREATE_STORY } from '../../apollo/client/mutations'
+import { useMutation } from '@apollo/client'
 
 import 'react-quill/dist/quill.snow.css' // ES6
 
 const StoryNew = () => {
-  const [content, setContent] = useState('')
+  const [state, setState] = useState({
+    title: '',
+    content: ''
+  })
 
   const handleChange = value => {
-    setContent(value)
+    setState({ ...state, content: value })
+  }
+
+  const [createStory] = useMutation(CREATE_STORY, {
+    variables: state
+  })
+
+  const onFormSubmit = async e => {
+    e.preventDefault()
+
+    createStory()
   }
 
   return (
     <Layout>
       <Container maxW="container.lg" mt="20" mb="20">
-        <Input variant="unstyled" placeholder="Story Title" mb="10" />
+        <Input
+          variant="unstyled"
+          placeholder="Story Title"
+          mb="10"
+          value={state.title}
+          onChange={e => setState({ ...state, title: e.target.value })}
+        />
 
         <ReactQuill
-          value={content}
+          value={state.content}
           onChange={handleChange}
           placeholder="Story Content"
         />
+
+        <Button type="submit" onClick={onFormSubmit}>
+          Submit
+        </Button>
       </Container>
     </Layout>
   )

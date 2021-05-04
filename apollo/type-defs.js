@@ -7,9 +7,14 @@ export const typeDefs = gql`
     email: String!
     password: String!
   }
+  type Story {
+    title: String!
+    content: String!
+  }
 
   type Query {
     users: [User]!
+    stories: [Story]!
   }
 
   input SignUpInput {
@@ -21,15 +26,23 @@ export const typeDefs = gql`
     email: String!
     password: String!
   }
+  input StoryInput {
+    title: String!
+    content: String!
+  }
   type SignUpPayload {
     user: User!
   }
   type SignInPayload {
     user: User!
   }
+  type StoryPayload {
+    story: Story!
+  }
 
   type Mutation {
     signUp(input: SignUpInput!): SignUpPayload!
     signIn(input: SignInInput!): SignInPayload!
+    createStory(input: StoryInput!): StoryPayload!
   }
 `

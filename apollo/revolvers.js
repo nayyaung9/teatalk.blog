@@ -1,11 +1,17 @@
-import User from '../db/models'
+const Models = require('../db/models')
 import { AuthenticationError, UserInputError } from 'apollo-server-micro'
 import { createUser, validatePassword } from '../lib/users'
+import { createStory } from '../lib/story'
 
 export const resolvers = {
   Query: {
     users() {
-      return User.find().then(res => {
+      return Models.User.find().then(res => {
+        return res
+      })
+    },
+    stories() {
+      return Models.Story.find().then(res => {
         return res
       })
     }
@@ -30,6 +36,14 @@ export const resolvers = {
       }
 
       throw new UserInputError('Invalid email and password combination')
+    },
+    async createStory(_, args, _ctx, _info) {
+      try {
+        console.log('story input', args.input)
+        const newStory = await createStory(args.input)
+
+        return { newStory }
+      } catch (err) {}
     }
   }
 }

@@ -1,12 +1,12 @@
 import bcrypt from 'bcrypt'
-import User from '../db/models'
+const Models = require('../db/models');
 import Cookies from 'js-cookie'
 import Router from 'next/router'
 
 export async function createUser({ username, email, password }) {
   const cryptoPassword = await bcrypt.hashSync(password, 10)
 
-  const newUser = new User({
+  const newUser = new Models.User({
     username,
     email,
     password: cryptoPassword

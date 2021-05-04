@@ -12,12 +12,27 @@ export const SIGN_IN = gql`
 `
 
 export const SIGN_UP = gql`
-  mutation SignUpMutation($username: String!, $email: String!, $password: String!) {
+  mutation SignUpMutation(
+    $username: String!
+    $email: String!
+    $password: String!
+  ) {
     signUp(input: { username: $username, email: $email, password: $password }) {
       user {
         username
         email
         password
+      }
+    }
+  }
+`
+
+export const CREATE_STORY = gql`
+  mutation CreateStoryMutation($title: String!, $content: String!) {
+    createStory(input: { title: $title, content: $content }) {
+      story {
+        title
+        content
       }
     }
   }

@@ -1,14 +1,9 @@
-import mongoose, { Schema, Document } from 'mongoose'
+import mongoose, { Schema } from 'mongoose'
+import { IUser, IStory } from './models.d'
 
 mongoose.Promise = global.Promise
 
 const db = mongoose.createConnection('mongodb://localhost:27017/teatalk')
-
-interface IUser extends Document {
-  email: string
-  username: string
-  password: string
-}
 
 const UserSchema: Schema = new Schema(
   {
@@ -21,6 +16,17 @@ const UserSchema: Schema = new Schema(
   }
 )
 
-const User = db.model<IUser>('User', UserSchema)
+const StorySchema: Schema = new Schema({
+  title: String,
+  content: String
+})
 
-export default User
+const User = db.model<IUser>('User', UserSchema)
+const Story = db.model<IStory>('Story', StorySchema)
+
+const Models = {
+  User,
+  Story
+}
+
+module.exports = Models;
