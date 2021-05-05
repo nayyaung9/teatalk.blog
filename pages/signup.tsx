@@ -17,7 +17,6 @@ import Layout from '../components/layout/Layout'
 import { SIGN_UP } from '../apollo/client/mutations'
 import { useMutation } from '@apollo/client'
 import { useRouter } from 'next/router'
-
 interface UserData {
   username: string
   password: string
@@ -34,14 +33,11 @@ export default function SignUp() {
   })
 
   const [signUp] = useMutation(SIGN_UP, {
-    variables: state,
-    onCompleted: data => data.login && router.push('/home')
+    variables: state
   })
 
   const onFormSubmit = async e => {
     e.preventDefault()
-
-
 
     signUp()
   }

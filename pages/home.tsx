@@ -14,8 +14,6 @@ import { GET_ALL_STORIES } from '../apollo/client/queries'
 
 const Home = () => {
   const { data, error, loading } = useQuery(GET_ALL_STORIES)
-
-  console.log('stories-data', loading)
   return (
     <Layout>
       <Container maxW="container.lg" mt="20">

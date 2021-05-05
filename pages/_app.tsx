@@ -5,7 +5,7 @@ import { useApollo } from '../apollo/client'
 import { ChakraProvider } from '@chakra-ui/react'
 import { DefaultSeo } from 'next-seo'
 import seoConfig from '../config/seo'
-import '../styles/global.css';
+import '../styles/global.css'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const apolloClient = useApollo(pageProps.initialApolloState)

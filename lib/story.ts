@@ -1,10 +1,10 @@
 const Models = require('../db/models');
-import Cookies from 'js-cookie'
 import Router from 'next/router'
 
-export async function createStory({ title, content }) {
+export async function createStory({ userId, title, content }) {
   try {
     let newStory = new Models.Story({
+      userId,
       title,
       content
     })

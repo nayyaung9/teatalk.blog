@@ -13,7 +13,13 @@ import {
   PopoverContent,
   useColorModeValue,
   useBreakpointValue,
-  useDisclosure
+  useDisclosure,
+  Avatar,
+  MenuButton,
+  Menu,
+  MenuList,
+  MenuItem,
+  MenuDivider
 } from '@chakra-ui/react'
 import {
   HamburgerIcon,
@@ -21,10 +27,13 @@ import {
   ChevronDownIcon,
   ChevronRightIcon
 } from '@chakra-ui/icons'
+import { VIEWER } from '../../apollo/client/queries'
+import { useQuery } from '@apollo/client'
 
-export default function WithSubnavigation() {
+function Header() {
   const { isOpen, onToggle } = useDisclosure()
-
+  const { data, loading, error } = useQuery(VIEWER)
+  const viewer = data?.viewer
   return (
     <Box>
       <Flex
@@ -72,28 +81,54 @@ export default function WithSubnavigation() {
           direction={'row'}
           spacing={6}
         >
-          <Button
-            as={'a'}
-            fontSize={'sm'}
-            fontWeight={400}
-            variant={'link'}
-            href={'signin'}
-          >
-            Sign In
-          </Button>
-          <Button
-            display={{ base: 'none', md: 'inline-flex' }}
-            fontSize={'sm'}
-            fontWeight={600}
-            color={'white'}
-            bg={'pink.400'}
-            href={'#'}
-            _hover={{
-              bg: 'pink.300'
-            }}
-          >
-            Sign Up
-          </Button>
+          {viewer && Object.keys(viewer).length > 1 ? (
+            <Menu>
+              <MenuButton
+                as={Button}
+                rounded={'full'}
+                variant={'link'}
+                cursor={'pointer'}
+              >
+                <Avatar
+                  size={'sm'}
+                  src={
+                    'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
+                  }
+                />
+              </MenuButton>
+              <MenuList>
+                <MenuItem>Profile</MenuItem>
+                <MenuItem>Write a story</MenuItem>
+                <MenuDivider />
+                <MenuItem>Logout</MenuItem>
+              </MenuList>
+            </Menu>
+          ) : (
+            <>
+              <Button
+                as={'a'}
+                fontSize={'sm'}
+                fontWeight={400}
+                variant={'link'}
+                href={'signin'}
+              >
+                Sign In
+              </Button>
+              <Button
+                display={{ base: 'none', md: 'inline-flex' }}
+                fontSize={'sm'}
+                fontWeight={600}
+                color={'white'}
+                bg={'pink.400'}
+                href={'#'}
+                _hover={{
+                  bg: 'pink.300'
+                }}
+              >
+                Sign Up
+              </Button>
+            </>
+          )}
         </Stack>
       </Flex>
 
@@ -300,3 +335,5 @@ const NAV_ITEMS: Array<NavItem> = [
     href: '#'
   }
 ]
+
+export default Header

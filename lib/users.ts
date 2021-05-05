@@ -1,6 +1,5 @@
 import bcrypt from 'bcrypt'
-const Models = require('../db/models');
-import Cookies from 'js-cookie'
+const Models = require('../db/models')
 import Router from 'next/router'
 
 export async function createUser({ username, email, password }) {
@@ -14,10 +13,14 @@ export async function createUser({ username, email, password }) {
 
   await newUser.save()
 
-  // Cookies.set('auth', true, { expires: 365 })
-  Router.push('/home')
+  // Router.push('/home')
 
   return newUser
+}
+
+export async function findUser({ email }) {
+  const user = await Models.User.findOne({ email })
+  return user
 }
 
 export async function validatePassword(user, inputPassword) {

@@ -5,6 +5,15 @@ export const GET_ALL_STORIES = gql`
     stories {
       title
       content
+      userId
+    }
+  }
+`
+export const VIEWER = gql`
+  query ViewerQuery {
+    viewer {
+      _id
+      username
     }
   }
 `

@@ -3,8 +3,8 @@ import { schema } from '../../apollo/schema'
 
 const apolloServer = new ApolloServer({
   schema,
-  context({ req }) {
-    return { req }
+  context(ctx) {
+    return ctx
   }
 })
 

@@ -28,11 +28,12 @@ export const SIGN_UP = gql`
 `
 
 export const CREATE_STORY = gql`
-  mutation CreateStoryMutation($title: String!, $content: String!) {
-    createStory(input: { title: $title, content: $content }) {
+  mutation CreateStoryMutation($title: String!, $content: String!, $userId: ID!) {
+    createStory(input: { title: $title, content: $content, userId: $userId }) {
       story {
         title
         content
+        userId
       }
     }
   }

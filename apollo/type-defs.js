@@ -10,11 +10,13 @@ export const typeDefs = gql`
   type Story {
     title: String!
     content: String!
+    userId: ID
   }
 
   type Query {
     users: [User]!
     stories: [Story]!
+    viewer: User
   }
 
   input SignUpInput {
@@ -29,6 +31,7 @@ export const typeDefs = gql`
   input StoryInput {
     title: String!
     content: String!
+    userId: ID
   }
   type SignUpPayload {
     user: User!

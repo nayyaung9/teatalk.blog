@@ -1,18 +1,28 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Layout from '../../components/layout/Layout'
 import dynamic from 'next/dynamic'
 import { Container, Input, Button } from '@chakra-ui/react'
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
 import { CREATE_STORY } from '../../apollo/client/mutations'
 import { useMutation } from '@apollo/client'
+import { VIEWER } from '../../apollo/client/queries'
+import { useQuery } from '@apollo/client'
 
 import 'react-quill/dist/quill.snow.css' // ES6
 
 const StoryNew = () => {
+  const { data, loading, error } = useQuery(VIEWER)
+  const viewer = data?.viewer
+
   const [state, setState] = useState({
     title: '',
-    content: ''
+    content: '',
+    userId: ''
   })
+
+  useEffect(() => {
+    setState({ ...state, userId: viewer?._id })
+  }, [viewer])
 
   const handleChange = value => {
     setState({ ...state, content: value })
@@ -24,7 +34,6 @@ const StoryNew = () => {
 
   const onFormSubmit = async e => {
     e.preventDefault()
-
     createStory()
   }
 

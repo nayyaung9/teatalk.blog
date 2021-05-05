@@ -18,7 +18,11 @@ const UserSchema: Schema = new Schema(
 
 const StorySchema: Schema = new Schema({
   title: String,
-  content: String
+  content: String,
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }
 })
 
 const User = db.model<IUser>('User', UserSchema)
@@ -29,4 +33,4 @@ const Models = {
   Story
 }
 
-module.exports = Models;
+module.exports = Models

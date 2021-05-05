@@ -13,6 +13,7 @@ import {
 } from '@chakra-ui/react'
 import { SIGN_IN } from '../apollo/client/mutations'
 import { useMutation } from '@apollo/client'
+import { useRouter } from 'next/router'
 
 interface UserData {
   email: string
@@ -20,22 +21,26 @@ interface UserData {
 }
 
 export default function SignIn() {
-  const [signIn] = useMutation(SIGN_IN)
+  const router = useRouter()
 
   const [state, setState] = useState<UserData | null>({
     email: '',
     password: ''
   })
 
+  const [signIn] = useMutation(SIGN_IN, {
+    variables: state,
+    onCompleted: data => {
+      if (data.signIn.user) {
+        router.push('/home')
+      }
+    }
+  })
+
   const onFormSubmit = async e => {
     e.preventDefault()
 
-    const { email, password } = state
-    const payload = {
-      email,
-      password
-    }
-    await signIn({ variables: payload })
+    signIn()
   }
 
   return (

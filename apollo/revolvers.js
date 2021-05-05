@@ -1,10 +1,24 @@
 const Models = require('../db/models')
 import { AuthenticationError, UserInputError } from 'apollo-server-micro'
-import { createUser, validatePassword } from '../lib/users'
+import { createUser, validatePassword, findUser } from '../lib/users'
 import { createStory } from '../lib/story'
+import { setLoginSession, getLoginSession } from '../lib/auth'
 
 export const resolvers = {
   Query: {
+    async viewer(_parent, _args, context, _info) {
+      try {
+        const session = await getLoginSession(context.req)
+
+        if (session) {
+          return findUser({ email: session.email })
+        }
+      } catch (error) {
+        throw new AuthenticationError(
+          'Authentication token is invalid, please log in'
+        )
+      }
+    },
     users() {
       return Models.User.find().then(res => {
         return res
@@ -18,7 +32,9 @@ export const resolvers = {
   },
   Mutation: {
     async signUp(_parent, args, _context, _info) {
-      const findUserExist = await User.findOne({ email: args.input.email })
+      const findUserExist = await Models.User.findOne({
+        email: args.input.email
+      })
 
       if (findUserExist)
         throw new UserInputError('email is already in use, try to login')
@@ -27,10 +43,16 @@ export const resolvers = {
       return { user }
     },
     async signIn(_, args, _context, _info) {
-      const user = await User.findOne({ email: args.input.email })
+      const user = await Models.User.findOne({ email: args.input.email })
 
       if (user && (await validatePassword(user, args.input.password))) {
-        Router.push('/home')
+        const session = {
+          _id: user._id,
+          email: user.email,
+          username: user.username
+        }
+
+        await setLoginSession(_context.res, session)
 
         return { user }
       }
@@ -39,7 +61,7 @@ export const resolvers = {
     },
     async createStory(_, args, _ctx, _info) {
       try {
-        console.log('story input', args.input)
+        console.log('story', args.input);
         const newStory = await createStory(args.input)
 
         return { newStory }
