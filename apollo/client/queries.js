@@ -6,6 +6,7 @@ export const GET_ALL_STORIES = gql`
       title
       content
       userId
+      uniqueId
     }
   }
 `
@@ -14,6 +15,16 @@ export const VIEWER = gql`
     viewer {
       _id
       username
+    }
+  }
+`
+
+export const STORY_BY_ID = gql`
+  query storyById($storyId: [String]!) {
+    storyById(uniqueId: $storyId) {
+      title
+      content
+      uniqueId
     }
   }
 `

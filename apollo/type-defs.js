@@ -10,15 +10,9 @@ export const typeDefs = gql`
   type Story {
     title: String!
     content: String!
+    uniqueId: String!
     userId: ID
   }
-
-  type Query {
-    users: [User]!
-    stories: [Story]!
-    viewer: User
-  }
-
   input SignUpInput {
     username: String!
     email: String!
@@ -41,6 +35,13 @@ export const typeDefs = gql`
   }
   type StoryPayload {
     story: Story!
+  }
+
+  type Query {
+    users: [User]!
+    stories: [Story]!
+    viewer: User
+    storyById(uniqueId: [String]): Story!
   }
 
   type Mutation {

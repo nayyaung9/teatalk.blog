@@ -1,7 +1,7 @@
 const Models = require('../db/models')
 import { AuthenticationError, UserInputError } from 'apollo-server-micro'
 import { createUser, validatePassword, findUser } from '../lib/users'
-import { createStory } from '../lib/story'
+import { createStory, storyById } from '../lib/story'
 import { setLoginSession, getLoginSession } from '../lib/auth'
 
 export const resolvers = {
@@ -28,6 +28,13 @@ export const resolvers = {
       return Models.Story.find().then(res => {
         return res
       })
+    },
+    async storyById(_parent, args, _context, _info) {
+      try {
+        return await storyById({ id: args.uniqueId[0] });
+      } catch (error) {
+        throw new Error('It is not possible list products');
+      }
     }
   },
   Mutation: {
@@ -61,7 +68,6 @@ export const resolvers = {
     },
     async createStory(_, args, _ctx, _info) {
       try {
-        console.log('story', args.input);
         const newStory = await createStory(args.input)
 
         return { newStory }

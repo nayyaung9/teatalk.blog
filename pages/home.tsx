@@ -8,7 +8,7 @@ import {
   Heading,
   Text
 } from '@chakra-ui/react'
-
+import Link from 'next/link'
 import { useQuery } from '@apollo/client'
 import { GET_ALL_STORIES } from '../apollo/client/queries'
 
@@ -26,10 +26,12 @@ const Home = () => {
             data &&
             data.stories.map((item, i) => (
               <Box key={i}>
-                <Image src={item.image} alt="Segun Adebayo" />
-                <Heading as="h4" size="md" mt="2">
-                  {item.title}
-                </Heading>
+                {/* <Image src={item.image} alt="Segun Adebayo" /> */}
+                <Link href={`/story/${item.uniqueId}`}>
+                  <Heading as="h4" size="md" mt="2">
+                    {item.title}
+                  </Heading>
+                </Link>
               </Box>
             ))
           )}

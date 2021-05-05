@@ -22,7 +22,8 @@ const StorySchema: Schema = new Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
-  }
+  },
+  uniqueId: String
 })
 
 const User = db.model<IUser>('User', UserSchema)

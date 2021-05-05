@@ -10,6 +10,7 @@ interface IStory extends Document {
   title: String 
   content: String 
   userId: ObjectId
+  uniqueId: String
 }
 
 export const {

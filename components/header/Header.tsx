@@ -297,43 +297,27 @@ interface NavItem {
 
 const NAV_ITEMS: Array<NavItem> = [
   {
-    label: 'Inspiration',
-    children: [
-      {
-        label: 'Explore Design Work',
-        subLabel: 'Trending Design to inspire you',
-        href: '#'
-      },
-      {
-        label: 'New & Noteworthy',
-        subLabel: 'Up-and-coming Designers',
-        href: '#'
-      }
-    ]
+    label: 'Home',
   },
   {
-    label: 'Find Work',
+    label: 'Category',
     children: [
       {
-        label: 'Job Board',
+        label: 'Relax',
         subLabel: 'Find your dream design job',
         href: '#'
       },
       {
-        label: 'Freelance Projects',
+        label: 'Politic',
         subLabel: 'An exclusive list for contract work',
         href: '#'
       }
     ]
   },
   {
-    label: 'Learn Design',
+    label: 'Project',
     href: '#'
   },
-  {
-    label: 'Hire Designers',
-    href: '#'
-  }
 ]
 
 export default Header
