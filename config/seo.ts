@@ -1,5 +1,5 @@
 const seoConfig = {
-  title: 'Tea Talk Blog',
+  title: 'တီးတော့ခ်',
   description: 'Yat Kwat Tea Talk Blog By NextJS',
   openGraph: {
     url: 'https://blogcms.vercel.app/',

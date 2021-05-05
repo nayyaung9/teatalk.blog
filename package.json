@@ -36,6 +36,7 @@
     "graphql-tools": "^7.0.4",
     "js-cookie": "^2.2.1",
     "js-cookies": "^1.0.4",
+    "moment": "^2.29.1",
     "mongodb": "^3.6.6",
     "mongoose": "^5.12.7",
     "next": "9.5.5",

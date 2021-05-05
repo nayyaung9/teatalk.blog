@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import Layout from '../../components/layout/Layout'
 import dynamic from 'next/dynamic'
 import { Container, Input, Button } from '@chakra-ui/react'
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
@@ -9,6 +8,7 @@ import { VIEWER } from '../../apollo/client/queries'
 import { useQuery } from '@apollo/client'
 
 import 'react-quill/dist/quill.snow.css' // ES6
+import PostAddLayout from '../../components/layout/PostAddLayout'
 
 const StoryNew = () => {
   const { data, loading, error } = useQuery(VIEWER)
@@ -27,7 +27,7 @@ const StoryNew = () => {
   const handleChange = value => {
     setState({ ...state, content: value })
   }
-  
+
   const [createStory] = useMutation(CREATE_STORY, {
     variables: state
   })
@@ -38,27 +38,22 @@ const StoryNew = () => {
   }
 
   return (
-    <Layout>
-      <Container maxW="container.lg" mt="20" mb="20">
-        <Input
-          variant="unstyled"
-          placeholder="Story Title"
-          mb="10"
-          value={state.title}
-          onChange={e => setState({ ...state, title: e.target.value })}
-        />
+    <PostAddLayout onFormSubmit={onFormSubmit}>
+      <Input
+        variant="unstyled"
+        placeholder="Story Title"
+        mb="10"
+        mt="10"
+        value={state.title}
+        onChange={e => setState({ ...state, title: e.target.value })}
+      />
 
-        <ReactQuill
-          value={state.content}
-          onChange={handleChange}
-          placeholder="Story Content"
-        />
-
-        <Button type="submit" onClick={onFormSubmit}>
-          Submit
-        </Button>
-      </Container>
-    </Layout>
+      <ReactQuill
+        value={state.content}
+        onChange={handleChange}
+        placeholder="Story Content"
+      />
+    </PostAddLayout>
   )
 }
 

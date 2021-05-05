@@ -1,5 +1,6 @@
 import gql from 'graphql-tag'
 
+
 export const typeDefs = gql`
   type User {
     _id: ID
@@ -18,6 +19,7 @@ export const typeDefs = gql`
     content: String!
     uniqueId: String!
     userId: User
+    createdAt: String
   }
   input SignUpInput {
     username: String!

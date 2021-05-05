@@ -28,7 +28,7 @@ export default function SignIn() {
     password: ''
   })
 
-  const [signIn] = useMutation(SIGN_IN, {
+  const [signIn, { error, loading }] = useMutation(SIGN_IN, {
     variables: state,
     onCompleted: data => {
       if (data.signIn.user) {
@@ -70,10 +70,11 @@ export default function SignIn() {
               align={'start'}
               justify={'space-between'}
             >
-              <Checkbox>Remember me</Checkbox>
-              <Link color={'blue.500'}>Forgot password?</Link>
+             
+              <Link href="/signup" color={'blue.500'}>Create new account</Link>
             </Stack>
             <Button
+              isLoading={loading ? true : false}
               colorScheme={'blue'}
               variant={'solid'}
               onClick={onFormSubmit}

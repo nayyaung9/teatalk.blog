@@ -8,7 +8,7 @@ export const GET_ALL_STORIES = gql`
       userId {
         username
       }
-
+      createdAt
       uniqueId
     }
   }

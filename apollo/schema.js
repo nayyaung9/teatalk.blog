@@ -5,4 +5,4 @@ import { resolvers } from './revolvers'
 export const schema = makeExecutableSchema({
   typeDefs,
   resolvers
-});
+})
