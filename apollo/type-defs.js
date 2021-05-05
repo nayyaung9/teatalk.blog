@@ -13,6 +13,12 @@ export const typeDefs = gql`
     uniqueId: String!
     userId: ID
   }
+  type StoryData {
+    title: String!
+    content: String!
+    uniqueId: String!
+    userId: User
+  }
   input SignUpInput {
     username: String!
     email: String!
@@ -25,7 +31,7 @@ export const typeDefs = gql`
   input StoryInput {
     title: String!
     content: String!
-    userId: ID
+    userId: ID!
   }
   type SignUpPayload {
     user: User!
@@ -39,9 +45,9 @@ export const typeDefs = gql`
 
   type Query {
     users: [User]!
-    stories: [Story]!
+    stories: [StoryData]!
     viewer: User
-    storyById(uniqueId: [String]): Story!
+    storyById(uniqueId: [String]): StoryData!
   }
 
   type Mutation {

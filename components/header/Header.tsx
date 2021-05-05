@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import {
   Box,
   Flex,
@@ -32,6 +33,8 @@ import { useQuery } from '@apollo/client'
 
 function Header() {
   const { isOpen, onToggle } = useDisclosure()
+  const router = useRouter()
+
   const { data, loading, error } = useQuery(VIEWER)
   const viewer = data?.viewer
   return (
@@ -98,7 +101,9 @@ function Header() {
               </MenuButton>
               <MenuList>
                 <MenuItem>Profile</MenuItem>
-                <MenuItem>Write a story</MenuItem>
+                <MenuItem onClick={() => router.push('/story/new')}>
+                  Write a story
+                </MenuItem>
                 <MenuDivider />
                 <MenuItem>Logout</MenuItem>
               </MenuList>
@@ -298,6 +303,7 @@ interface NavItem {
 const NAV_ITEMS: Array<NavItem> = [
   {
     label: 'Home',
+    href: "/home"
   },
   {
     label: 'Category',
@@ -317,7 +323,7 @@ const NAV_ITEMS: Array<NavItem> = [
   {
     label: 'Project',
     href: '#'
-  },
+  }
 ]
 
 export default Header

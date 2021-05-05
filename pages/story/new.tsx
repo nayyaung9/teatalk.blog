@@ -27,7 +27,7 @@ const StoryNew = () => {
   const handleChange = value => {
     setState({ ...state, content: value })
   }
-
+  
   const [createStory] = useMutation(CREATE_STORY, {
     variables: state
   })

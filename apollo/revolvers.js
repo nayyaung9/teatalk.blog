@@ -25,15 +25,13 @@ export const resolvers = {
       })
     },
     stories() {
-      return Models.Story.find().then(res => {
-        return res
-      })
+      return Models.Story.find().populate('userId')
     },
     async storyById(_parent, args, _context, _info) {
       try {
-        return await storyById({ id: args.uniqueId[0] });
+        return await storyById({ id: args.uniqueId[0] })
       } catch (error) {
-        throw new Error('It is not possible list products');
+        throw new Error('There was an error while processing your request.')
       }
     }
   },

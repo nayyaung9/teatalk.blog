@@ -5,7 +5,10 @@ export const GET_ALL_STORIES = gql`
     stories {
       title
       content
-      userId
+      userId {
+        username
+      }
+
       uniqueId
     }
   }
@@ -25,6 +28,9 @@ export const STORY_BY_ID = gql`
       title
       content
       uniqueId
+      userId {
+        username
+      }
     }
   }
 `

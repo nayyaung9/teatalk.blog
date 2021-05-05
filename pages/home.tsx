@@ -11,9 +11,12 @@ import {
 import Link from 'next/link'
 import { useQuery } from '@apollo/client'
 import { GET_ALL_STORIES } from '../apollo/client/queries'
+import AlertError from '../components/error/AlertError'
 
 const Home = () => {
   const { data, error, loading } = useQuery(GET_ALL_STORIES)
+
+  console.log('data', data);
   return (
     <Layout>
       <Container maxW="container.lg" mt="20">
@@ -21,7 +24,7 @@ const Home = () => {
           {loading ? (
             <div>Loading...</div>
           ) : error ? (
-            <div>Err {JSON.stringify(error)}</div>
+            <AlertError status="error" message="Application Error" />
           ) : (
             data &&
             data.stories.map((item, i) => (

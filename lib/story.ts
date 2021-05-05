@@ -14,10 +14,10 @@ export async function createStory({ userId, title, content }) {
 
     return newStory
   } catch (err) {
-    console.log('err')
+    console.log('err', err)
   }
 }
 
 export async function storyById({ id }) {
-  return await Models.Story.findOne({ uniqueId: id }).populate('userId')
+  return await Models.Story.findOne({ uniqueId: id }).populate('userId').exec();
 }

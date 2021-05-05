@@ -1,3 +1,23 @@
 .ql-toolbar.ql-snow, .ql-container.ql-snow {
   border: 0 !important;
 }
+
+::-webkit-scrollbar {
+  width: 14px;
+  height: 18px;
+}
+::-webkit-scrollbar-track {
+  background-clip: padding-box;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  border: 4px solid rgba(107, 107, 107, 0);
+  background-clip: padding-box;
+  background-color: #383838;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
+  display: none;
+}

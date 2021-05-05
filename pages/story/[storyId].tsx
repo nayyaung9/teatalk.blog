@@ -1,10 +1,11 @@
 import React from 'react'
 import { useRouter } from 'next/router'
 import Layout from '../../components/layout/Layout'
-import { Container, Box, Heading } from '@chakra-ui/react'
+import { Container, Box, Heading, Text } from '@chakra-ui/react'
 import { STORY_BY_ID } from '../../apollo/client/queries'
 import { useQuery } from '@apollo/client'
-import readingTime from 'reading-time';
+import readingTime from 'reading-time'
+import AlertError from '../../components/error/AlertError'
 
 const StoryDetail = () => {
   const router = useRouter()
@@ -17,7 +18,11 @@ const StoryDetail = () => {
   })
 
   if ((error || !data?.storyById) && !loading) {
-    return <div>Error</div>
+    return (
+      <Layout>
+        <AlertError message="Application Error" status="error" />
+      </Layout>
+    )
   } else if (loading) {
     return (
       <div>
@@ -26,7 +31,9 @@ const StoryDetail = () => {
     )
   }
 
-  const timeToRead = readingTime(data?.storyById.content);
+  console.log('data', data)
+
+  const timeToRead = readingTime(data?.storyById.content)
 
   return (
     <Layout>
@@ -37,7 +44,10 @@ const StoryDetail = () => {
       <Container maxW="container.md">
         <Box mt="3">
           <Heading mb="4">{data?.storyById.title}</Heading>
-          {timeToRead.text}
+          <Text fontSize="md" mb="6">
+            {' '}
+            {timeToRead.text} By {data?.storyById?.userId.username}
+          </Text>
           <div dangerouslySetInnerHTML={{ __html: data?.storyById.content }} />
         </Box>
       </Container>

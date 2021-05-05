@@ -16,15 +16,20 @@ const UserSchema: Schema = new Schema(
   }
 )
 
-const StorySchema: Schema = new Schema({
-  title: String,
-  content: String,
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+const StorySchema: Schema = new Schema(
+  {
+    title: String,
+    content: String,
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    },
+    uniqueId: String
   },
-  uniqueId: String
-})
+  {
+    timestamps: true
+  }
+)
 
 const User = db.model<IUser>('User', UserSchema)
 const Story = db.model<IStory>('Story', StorySchema)
