@@ -5,18 +5,17 @@ import {
   SimpleGrid,
   Box,
   Image,
-  Badge,
-  Avatar
+  Avatar,
+  useColorModeValue
 } from '@chakra-ui/react'
 import Link from 'next/link'
 import { useQuery } from '@apollo/client'
 import { GET_ALL_STORIES } from '../apollo/client/queries'
 import AlertError from '../components/error/AlertError'
-import moment from 'moment';
+import moment from 'moment'
 
 const Home = () => {
   const { data, error, loading } = useQuery(GET_ALL_STORIES)
-  console.log('data', data);
   return (
     <Layout>
       <Container maxW="container.lg" mt="20">
@@ -31,14 +30,23 @@ const Home = () => {
               <Box
                 key={i}
                 maxW="md"
-                borderWidth="1px"
-                borderRadius="lg"
-                overflow="hidden"
+                bg={useColorModeValue('white', 'gray.900')}
+                boxShadow={'2xl'}
+                rounded={'md'}
+                p={6}
+                overflow={'hidden'}
               >
-                <div style={{ position: 'relative' }}>
+                <Box
+                  h={'210px'}
+                  bg={'gray.100'}
+                  mt={-6}
+                  mx={-6}
+                  mb={6}
+                  pos={'relative'}
+                >
                   <Image
                     src="https://image.freepik.com/free-photo/aerial-view-man-using-computer-laptop-wooden-table_53876-24824.jpg"
-                    alt="Segun Adebayo"
+                    layout={'fill'}
                   />
                   <Avatar
                     name="Dan Abrahmov"
@@ -50,9 +58,9 @@ const Home = () => {
                       border: '4px solid #fff'
                     }}
                   />
-                </div>
+                </Box>
 
-                <Box p="6">
+                <Box>
                   <Box d="flex" alignItems="baseline">
                     <Box as="span" color="gray.600" fontSize="sm">
                       {moment(item.createdAt).format('MMMM Do YYYY, h:mm:ss a')}
