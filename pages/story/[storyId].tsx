@@ -1,10 +1,10 @@
 import React from 'react'
-import Head from 'next/head';
 import { useRouter } from 'next/router'
 import Layout from '../../components/layout/Layout'
 import { Container, Box, Heading } from '@chakra-ui/react'
 import { STORY_BY_ID } from '../../apollo/client/queries'
 import { useQuery } from '@apollo/client'
+import readingTime from 'reading-time';
 
 const StoryDetail = () => {
   const router = useRouter()
@@ -16,9 +16,6 @@ const StoryDetail = () => {
     }
   })
 
-  console.log('data', data)
-  console.log('data id', data?.storyById)
-
   if ((error || !data?.storyById) && !loading) {
     return <div>Error</div>
   } else if (loading) {
@@ -29,15 +26,18 @@ const StoryDetail = () => {
     )
   }
 
+  const timeToRead = readingTime(data?.storyById.content);
+
   return (
     <Layout>
-      <Head>
-        <meta name="content" description="LoL" />
-      </Head>
+      <img
+        src="https://images.unsplash.com/photo-1620111991662-77d10cbb7b91?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1489&q=80"
+        style={{ width: '100%' }}
+      />
       <Container maxW="container.md">
         <Box mt="3">
-          <Heading>{data?.storyById.title}</Heading>
-
+          <Heading mb="4">{data?.storyById.title}</Heading>
+          {timeToRead.text}
           <div dangerouslySetInnerHTML={{ __html: data?.storyById.content }} />
         </Box>
       </Container>

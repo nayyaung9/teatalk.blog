@@ -19,6 +19,5 @@ export async function createStory({ userId, title, content }) {
 }
 
 export async function storyById({ id }) {
-  console.log('uniqueId', id);
-  return await Models.Story.findOne({ uniqueId: id }).populate('_user')
+  return await Models.Story.findOne({ uniqueId: id }).populate('userId')
 }
