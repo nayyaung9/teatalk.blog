@@ -13,13 +13,15 @@ import { useQuery } from '@apollo/client'
 import { GET_ALL_STORIES } from '../apollo/client/queries'
 import AlertError from '../components/error/AlertError'
 import moment from 'moment'
+import PinPostList from '../components/post/PinPostList'
 
 const Home = () => {
   const { data, error, loading } = useQuery(GET_ALL_STORIES)
   return (
     <Layout>
-      <Container maxW="container.lg" mt="20">
-        <SimpleGrid columns={[1, null, 3]} spacing="30px">
+      <Container maxW="container.lg" mt="10">
+        {/* <PinPostList /> */}
+        <SimpleGrid columns={[1, null, 3]} spacing="30px" mt="10">
           {loading ? (
             <div>Loading...</div>
           ) : error ? (

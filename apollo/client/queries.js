@@ -8,6 +8,7 @@ export const GET_ALL_STORIES = gql`
       userId {
         username
       }
+      isPin
       createdAt
       uniqueId
     }
@@ -31,6 +32,20 @@ export const STORY_BY_ID = gql`
       userId {
         username
       }
+    }
+  }
+`
+
+export const STORY_BY_PIN = gql`
+  query storyByPin($isPin: Boolean!) {
+    storyByPin(sort: { isPin: $isPin }) {
+      title
+      content
+      uniqueId
+      userId {
+        username
+      }
+      isPin
     }
   }
 `

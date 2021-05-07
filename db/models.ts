@@ -24,7 +24,11 @@ const StorySchema: Schema = new Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     },
-    uniqueId: String
+    uniqueId: String,
+    isPin: {
+      type: Boolean,
+      default: false
+    }
   },
   {
     timestamps: true

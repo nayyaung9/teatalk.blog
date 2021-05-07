@@ -1,6 +1,5 @@
 import gql from 'graphql-tag'
 
-
 export const typeDefs = gql`
   type User {
     _id: ID
@@ -20,6 +19,7 @@ export const typeDefs = gql`
     uniqueId: String!
     userId: User
     createdAt: String
+    isPin: Boolean
   }
   input SignUpInput {
     username: String!
@@ -45,11 +45,16 @@ export const typeDefs = gql`
     story: Story!
   }
 
+  input SortByPin {
+    isPin: Boolean
+  }
+
   type Query {
     users: [User]!
     stories: [StoryData]!
     viewer: User
     storyById(uniqueId: [String]): StoryData!
+    storyByPin(sort: SortByPin): [StoryData]!
   }
 
   type Mutation {

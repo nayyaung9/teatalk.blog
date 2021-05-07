@@ -11,6 +11,7 @@ interface IStory extends Document {
   content: String 
   userId: ObjectId
   uniqueId: String
+  isPin: Boolean
 }
 
 export const {

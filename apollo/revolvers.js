@@ -1,7 +1,7 @@
 const Models = require('../db/models')
 import { AuthenticationError, UserInputError } from 'apollo-server-micro'
 import { createUser, validatePassword, findUser } from '../lib/users'
-import { createStory, storyById } from '../lib/story'
+import { createStory, storyById, storyByPin } from '../lib/story'
 import { setLoginSession, getLoginSession } from '../lib/auth'
 
 export const resolvers = {
@@ -32,6 +32,20 @@ export const resolvers = {
         return await storyById({ id: args.uniqueId[0] })
       } catch (error) {
         throw new Error('There was an error while processing your request.')
+      }
+    },
+    async storyByPin(_, args, _ctx, _info) {
+      try {
+        if (args.sort) {
+          console.log(args.sort)
+          return await storyByPin()
+        }
+      } catch (error) {
+        console.log('error', error);
+        throw new Error(
+          'There was an error while processing your request.',
+          error
+        )
       }
     }
   },

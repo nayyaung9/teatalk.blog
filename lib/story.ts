@@ -19,5 +19,13 @@ export async function createStory({ userId, title, content }) {
 }
 
 export async function storyById({ id }) {
-  return await Models.Story.findOne({ uniqueId: id }).populate('userId').exec();
+  return await Models.Story.findOne({ uniqueId: id }).populate('userId').exec()
+}
+
+export async function storyByPin() {
+  return await Models.Story.find({ isPin: true })
+    .sort({ createdAt: -1 })
+    .limit(3)
+    .populate('userId')
+    .exec()
 }
