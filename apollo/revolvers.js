@@ -37,7 +37,6 @@ export const resolvers = {
     async storyByPin(_, args, _ctx, _info) {
       try {
         if (args.sort) {
-          console.log(args.sort)
           return await storyByPin()
         }
       } catch (error) {
@@ -81,7 +80,7 @@ export const resolvers = {
     async createStory(_, args, _ctx, _info) {
       try {
         const newStory = await createStory(args.input)
-
+        console.log('newStory revolser', newStory);
         return { newStory }
       } catch (err) {}
     }

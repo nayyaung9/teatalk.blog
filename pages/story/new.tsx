@@ -6,6 +6,7 @@ import { CREATE_STORY } from '../../apollo/client/mutations'
 import { useMutation } from '@apollo/client'
 import { VIEWER } from '../../apollo/client/queries'
 import { useQuery } from '@apollo/client'
+import { useRouter } from 'next/router'
 
 import 'react-quill/dist/quill.snow.css' // ES6
 import PostAddLayout from '../../components/layout/PostAddLayout'
@@ -13,6 +14,7 @@ import PostAddLayout from '../../components/layout/PostAddLayout'
 const StoryNew = () => {
   const { data, loading, error } = useQuery(VIEWER)
   const viewer = data?.viewer
+  const router = useRouter()
 
   const [state, setState] = useState({
     title: '',
@@ -29,7 +31,11 @@ const StoryNew = () => {
   }
 
   const [createStory] = useMutation(CREATE_STORY, {
-    variables: state
+    variables: state,
+    onCompleted: data => {
+      console.log('uploaded story', data)
+      return router.push(`/story/${data.story.uniqueId}`)
+    }
   })
 
   const onFormSubmit = async e => {

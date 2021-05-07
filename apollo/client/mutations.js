@@ -37,7 +37,7 @@ export const CREATE_STORY = gql`
       story {
         title
         content
-        userId
+        userId 
       }
     }
   }

@@ -1,14 +1,20 @@
 import Layout from '../components/layout/Layout'
+import { Container } from '@chakra-ui/react'
 import Hero from '../components/hero/Hero'
-import NewsLetter from '../components/newsletter/NewsLetter';
-import TestimonialList from '../components/testimonials/Testimonials';
+import { useQuery } from '@apollo/client'
+import { VIEWER } from '../apollo/client/queries'
+import PostList from '../components/post/PostList'
 
 export default function Home() {
+  const { data, loading, error } = useQuery(VIEWER)
+  const viewer = data?.viewer
+
   return (
     <Layout>
-      <Hero />
-      <TestimonialList />
-      <NewsLetter />
+      {viewer === null && <Hero /> }
+      <Container maxW="container.lg" mt="10">
+        <PostList />
+      </Container>
     </Layout>
   )
 }

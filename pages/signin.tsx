@@ -32,7 +32,7 @@ export default function SignIn() {
     variables: state,
     onCompleted: data => {
       if (data.signIn.user) {
-        router.push('/home')
+        router.push('/')
       }
     }
   })

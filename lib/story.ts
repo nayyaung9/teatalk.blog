@@ -10,9 +10,19 @@ export async function createStory({ userId, title, content }) {
       uniqueId: await shortId.generate()
     })
 
-    await newStory.save()
+    // await newStory.save()
 
-    return newStory
+    let newPost
+
+    await newStory.save(function (err, storyAuthor) {
+      storyAuthor.populate('userId', function (err, author) {
+        return newPost = author
+      })
+    })
+
+    console.log('newPost', newPost)
+
+    return newPost
   } catch (err) {
     console.log('err', err)
   }
